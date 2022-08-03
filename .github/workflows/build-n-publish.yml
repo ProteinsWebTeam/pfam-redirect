@@ -1,0 +1,21 @@
+name: Build and Publish in github pages
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+      - name: 🔧 Install
+        run: |
+          yarn
+      - name: 🏗 Build Site
+        run: |
+          yarn build
+      - name: 🚀 Deploy Site
+        if: github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist # The folder the action should deploy.
