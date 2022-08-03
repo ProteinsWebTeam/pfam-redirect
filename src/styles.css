@@ -1,0 +1,48 @@
+body {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.421;
+}
+main {
+  margin: 0 4em;
+}
+header {
+  color: darkblue;
+  margin-bottom: 2em;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+.spinner {
+  animation: rotate 2s linear infinite;
+  transform-origin: 25px 25px;
+  z-index: 2;
+  margin: 0;
+  width: 50px;
+  height: 50px;
+}
+.spinner .path {
+  stroke: #004986;
+  stroke-linecap: round;
+  animation: dash 12s ease-in-out 1;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dasharray: 150, 150;
+    stroke-dashoffset: 0;
+  }
+}

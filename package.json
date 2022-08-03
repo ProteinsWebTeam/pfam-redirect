@@ -1,0 +1,27 @@
+{
+  "name": "pfam-redirect",
+  "version": "1.0.0",
+  "description": "A landing page to redirect pfam requests to InterPro pages",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProteinsWebTeam/pfam-redirect.git"
+  },
+  "keywords": [
+    "pfam",
+    "interepro"
+  ],
+  "author": "Gustavo A. Salazar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ProteinsWebTeam/pfam-redirect/issues"
+  },
+  "homepage": "https://github.com/ProteinsWebTeam/pfam-redirect#readme",
+  "devDependencies": {
+    "parcel": "^2.6.2"
+  }
+}
