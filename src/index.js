@@ -33,8 +33,10 @@ const urlParts = pathname.split("/");
 let newURL = null;
 switch (urlParts[0].toLowerCase()) {
   case "family":
-    if (pfamAccessionRegex.test(urlParts[1])) {
+    if (pfamAccessionRegex.test(urlParts?.[1])) {
       newURL = `${interproURL}/entry/pfam/${urlParts[1]}`;
+    } else if (urlParts?.[1] === "browse") {
+      newURL = `${interproURL}/entry/pfam/`;
     }
     break;
   case "protein":
@@ -45,12 +47,26 @@ switch (urlParts[0].toLowerCase()) {
   case "clan":
     if (clanAccessionRegex.test(urlParts[1])) {
       newURL = `${interproURL}/set/pfam/${urlParts[1]}`;
+    } else if (urlParts?.[1] === "browse") {
+      newURL = `${interproURL}/set/pfam/`;
+    }
+    break;
+  case "proteome":
+    if (!urlParts?.[1] && url.searchParams.get("taxId")) {
+      newURL = `${interproURL}/taxonomy/uniprot/${url.searchParams.get(
+        "taxId"
+      )}/entry/pfam/`;
+    } else if (urlParts?.[1] === "browse") {
+      newURL = `${interproURL}/taxonomy/uniprot/entry/pfam/`;
     }
     break;
   case "structure":
     if (pdbAccessionRegex.test(urlParts[1])) {
       newURL = `${interproURL}/structure/pdb/${urlParts[1]}`;
     }
+    break;
+  case "browse":
+    newURL = `${interproURL}/entry/pfam`;
     break;
   case "search":
     switch (url.hash) {
@@ -83,7 +99,7 @@ const iproLink = document.getElementById("linkToInterPro");
 iproLink.setAttribute("href", newURL);
 iproLink.innerHTML = newURL;
 
-const legacyNewURL = `${legacyURL}/${pathname}`;
+const legacyNewURL = `${legacyURL}/${pathname}${url.search ?? ""}`;
 const legacyLink = document.getElementById("linkToLegacy");
 legacyLink.setAttribute("href", legacyNewURL);
 legacyLink.innerHTML = legacyNewURL;
