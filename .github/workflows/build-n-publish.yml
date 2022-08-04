@@ -13,7 +13,7 @@ jobs:
           yarn
       - name: 🏗 Build Site
         run: |
-          sed -i 's/.*"basepath".*"/  "basepath"\: "pfam-redirect\/\?\/"/' config.json
+          sed -i 's/.*"basepath".*"/  "basepath"\: "\?"/' config.json
           cat config.json
           yarn build -- --public-url ./
       - name: 🚀 Deploy Site

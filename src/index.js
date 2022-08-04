@@ -23,6 +23,8 @@ const url = new URL(document.location.href);
 let pathname = url.pathname;
 if (url.pathname.startsWith(basepath)) {
   pathname = url.pathname.slice(basepath.length);
+} else if (basepath === "?") {
+  pathname = url.search.slice(2);
 } else {
   console.error("the pathname doesn't start with the given base path");
 }
@@ -81,7 +83,7 @@ const iproLink = document.getElementById("linkToInterPro");
 iproLink.setAttribute("href", newURL);
 iproLink.innerHTML = newURL;
 
-const legacyNewURL = `${legacyURL}${url.pathname}`;
+const legacyNewURL = `${legacyURL}/${pathname}`;
 const legacyLink = document.getElementById("linkToLegacy");
 legacyLink.setAttribute("href", legacyNewURL);
 legacyLink.innerHTML = legacyNewURL;
