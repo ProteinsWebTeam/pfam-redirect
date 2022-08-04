@@ -1,5 +1,4 @@
-const interproURL = "https://www.ebi.ac.uk/interpro";
-const legacyURL = "https://legacy.pfam.xfam.org";
+import { basepath, interproURL, legacyURL } from "../config.json";
 
 const pfamAccessionRegex = /pf\d{5}/i;
 const clanAccessionRegex = /cl\d{4}/i;
@@ -21,28 +20,34 @@ const counterID = setInterval(() => {
 }, 1000);
 
 const url = new URL(document.location.href);
-const urlParts = url.pathname.split("/");
+let pathname = url.pathname;
+if (url.pathname.startsWith(basepath)) {
+  pathname = url.pathname.slice(basepath.length);
+} else {
+  console.error("the pathname doesn't start with the given base path");
+}
+const urlParts = pathname.split("/");
 
 let newURL = null;
-switch (urlParts[1].toLowerCase()) {
+switch (urlParts[0].toLowerCase()) {
   case "family":
-    if (pfamAccessionRegex.test(urlParts[2])) {
-      newURL = `${interproURL}/entry/pfam/${urlParts[2]}`;
+    if (pfamAccessionRegex.test(urlParts[1])) {
+      newURL = `${interproURL}/entry/pfam/${urlParts[1]}`;
     }
     break;
   case "protein":
-    if (uniprotAccessionRegex.test(urlParts[2])) {
-      newURL = `${interproURL}/protein/uniprot/${urlParts[2]}`;
+    if (uniprotAccessionRegex.test(urlParts[1])) {
+      newURL = `${interproURL}/protein/uniprot/${urlParts[1]}`;
     }
     break;
   case "clan":
-    if (clanAccessionRegex.test(urlParts[2])) {
-      newURL = `${interproURL}/set/pfam/${urlParts[2]}`;
+    if (clanAccessionRegex.test(urlParts[1])) {
+      newURL = `${interproURL}/set/pfam/${urlParts[1]}`;
     }
     break;
   case "structure":
-    if (pdbAccessionRegex.test(urlParts[2])) {
-      newURL = `${interproURL}/structure/pdb/${urlParts[2]}`;
+    if (pdbAccessionRegex.test(urlParts[1])) {
+      newURL = `${interproURL}/structure/pdb/${urlParts[1]}`;
     }
     break;
   case "search":
@@ -68,7 +73,7 @@ switch (urlParts[1].toLowerCase()) {
 
 if (newURL === null) {
   newURL = urlParts?.[2]
-    ? `${interproURL}/search/text/${urlParts[2]}`
+    ? `${interproURL}/search/text/${urlParts[1]}`
     : interproURL;
 }
 
