@@ -2,7 +2,10 @@
   "name": "pfam-redirect",
   "version": "1.0.0",
   "description": "A landing page to redirect pfam requests to InterPro pages",
-  "source": "src/index.html",
+  "source": [
+    "src/index.html",
+    "src/404.html"
+  ],
   "scripts": {
     "start": "parcel",
     "build": "parcel build"
