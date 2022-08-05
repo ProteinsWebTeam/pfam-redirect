@@ -7,7 +7,10 @@ const uniprotAccessionRegex =
   /[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}/i;
 
 let seqLeft = 9;
+let playing = true;
+
 const counterID = setInterval(() => {
+  if (!playing) return;
   seqLeft = Math.max(seqLeft - 1, 0);
   document
     .querySelectorAll(".sec-left")
@@ -95,6 +98,15 @@ if (newURL === null) {
     : interproURL;
 }
 
+const svg = document.getElementById("countdown");
+svg.addEventListener("click", () => {
+  playing = !playing;
+  if (playing) {
+    svg.classList.remove("paused");
+  } else {
+    svg.classList.add("paused");
+  }
+});
 const iproLink = document.getElementById("linkToInterPro");
 iproLink.setAttribute("href", newURL);
 iproLink.innerHTML = newURL;

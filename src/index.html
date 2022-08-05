@@ -19,7 +19,12 @@
             into InterPro.
           </p>
           <div class="center">
-            <svg width="200px" height="200px" viewBox="0 0 50 50">
+            <svg
+              width="200px"
+              height="200px"
+              viewBox="0 0 50 50"
+              id="countdown"
+            >
               <g class="spinner">
                 <circle
                   class="path"
@@ -31,6 +36,13 @@
                 ></circle>
               </g>
               <text x="20" y="30" class="sec-left">-</text>
+              <g class="button pause">
+                <rect x="16" y="15" width="8" height="20" />
+                <rect x="26" y="15" width="8" height="20" />
+              </g>
+              <g class="button play">
+                <path d="M16,15 L33,25 L16,35" />
+              </g>
             </svg>
           </div>
           <p>
