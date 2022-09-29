@@ -1,4 +1,4 @@
-import { basepath, interproURL, legacyURL } from "../config.json";
+import { basepath, interproURL, legacyURL, test } from "../config.json";
 
 const pfamAccessionRegex = /pf\d{5}/i;
 const clanAccessionRegex = /cl\d{4}/i;
@@ -16,8 +16,8 @@ const counterID = setInterval(() => {
     .querySelectorAll(".sec-left")
     .forEach((element) => (element.innerHTML = seqLeft));
   if (seqLeft === 0) {
-    // window.location.replace(newURL);
-    console.log(newURL);
+    if (test) console.log(newURL);
+    else window.location.replace(newURL);
     clearInterval(counterID);
   }
 }, 1000);
@@ -93,7 +93,7 @@ switch (urlParts[0].toLowerCase()) {
 }
 
 if (newURL === null) {
-  newURL = urlParts?.[2]
+  newURL = urlParts?.[1]
     ? `${interproURL}/search/text/${urlParts[1]}`
     : interproURL;
 }

@@ -1,5 +1,6 @@
 {
   "basepath": "/",
   "interproURL": "https://www.ebi.ac.uk/interpro",
-  "legacyURL": "https://legacy.pfam.xfam.org"
+  "legacyURL": "http://pfamdev-legacy.xfam.org",
+  "test": true
 }
