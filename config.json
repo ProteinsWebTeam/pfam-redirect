@@ -2,5 +2,6 @@
   "basepath": "/",
   "interproURL": "https://www.ebi.ac.uk/interpro",
   "legacyURL": "http://pfamdev-legacy.xfam.org",
+  "uniprotURL": "https://rest.uniprot.org/uniprotkb",
   "test": true
 }

@@ -1,4 +1,4 @@
-import { basepath, interproURL, legacyURL, test } from "../config.json";
+import { basepath, interproURL, legacyURL, uniprotURL, test } from "../config.json";
 
 const pfamAccessionRegex = /pf\d{5}/i;
 const clanAccessionRegex = /cl\d{4}/i;
@@ -40,11 +40,27 @@ switch (urlParts[0].toLowerCase()) {
       newURL = `${interproURL}/entry/pfam/${urlParts[1]}`;
     } else if (urlParts?.[1] === "browse") {
       newURL = `${interproURL}/entry/pfam/`;
+    } else if (urlParts?.[1].length > 0) {
+      const response = await fetch(`${interproURL}/api/entry/pfam?search=${urlParts[1]}`);
+      if (response.ok) {
+        const payload = await response.json();
+        if (payload.results.length > 0) {
+          newURL = `${interproURL}/entry/pfam/${payload.results[0].metadata.accession}`;
+        }
+      }
     }
     break;
   case "protein":
     if (uniprotAccessionRegex.test(urlParts[1])) {
       newURL = `${interproURL}/protein/uniprot/${urlParts[1]}`;
+    } else {
+      const response = await fetch(`${uniprotURL}/search?query=${urlParts[1]}`);
+      if (response.ok) {
+        const payload = await response.json();
+        if (payload.results.length === 1) {
+          newURL = `${interproURL}/protein/uniprot/${payload.results[0].primaryAccession}`;
+        }
+      }
     }
     break;
   case "clan":
@@ -52,6 +68,14 @@ switch (urlParts[0].toLowerCase()) {
       newURL = `${interproURL}/set/pfam/${urlParts[1]}`;
     } else if (urlParts?.[1] === "browse") {
       newURL = `${interproURL}/set/pfam/`;
+    } else if (urlParts?.[1].length > 0) {
+      const response = await fetch(`${interproURL}/api/set/pfam?search=${urlParts[1]}`);
+      if (response.ok) {
+        const payload = await response.json();
+        if (payload.results.length > 0) {
+          newURL = `${interproURL}/set/pfam/${payload.results[0].metadata.accession}`;
+        }
+      }
     }
     break;
   case "proteome":
