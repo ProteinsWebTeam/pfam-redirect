@@ -98,7 +98,7 @@ switch (urlParts[0].toLowerCase()) {
   case "search":
     switch (url.hash) {
       case "#tabview=tab0":
-      case "#searchDomainBlock":
+      case "#searchSequenceBlock":
         newURL = `${interproURL}/search/sequence/`;
         break;
       case "#tabview=tab2":
