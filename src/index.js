@@ -61,8 +61,10 @@ const checkAPI = async (type, term) => {
   }
   return null;
 };
+let newURL = null;
 
 const setNewURL = (theNewURL) => {
+  newURL = theNewURL;
   if (theNewURL === null) {
     theNewURL = urlParts?.[1]
       ? `${interproURL}/search/text/${urlParts[1]}`
@@ -84,7 +86,6 @@ if (url.pathname.startsWith(basepath)) {
 }
 const urlParts = pathname.split("/");
 
-let newURL = null;
 switch (urlParts[0].toLowerCase()) {
   case "family":
     if (pfamAccessionRegex.test(urlParts?.[1])) {
