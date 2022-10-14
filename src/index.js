@@ -1,10 +1,10 @@
-import { basepath, interproURL, legacyURL, uniprotURL, test } from "../config.json";
+import { basepath, interproURL, legacyURL, test } from "../config.json";
 
-const pfamAccessionRegex = /pf\d{5}/i;
-const clanAccessionRegex = /cl\d{4}/i;
-const pdbAccessionRegex = /[a-zA-Z\d]{4}/i;
+const pfamAccessionRegex = /pf\d{5}$/i;
+const clanAccessionRegex = /cl\d{4}$/i;
+const pdbAccessionRegex = /[a-zA-Z\d]{4}$/i;
 const uniprotAccessionRegex =
-  /[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}/i;
+  /[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$/i;
 
 let seqLeft = 9;
 let playing = true;
@@ -21,6 +21,48 @@ const counterID = setInterval(() => {
     clearInterval(counterID);
   }
 }, 1000);
+
+const checkAPI = async (type, term) => {
+  let checkURL = null;
+  let targetURL = null;
+  switch (type) {
+    case "entry":
+      checkURL = `${interproURL}/api/entry/pfam?search=${term}`;
+      targetURL = `${interproURL}/entry/pfam/`;
+      break;
+    case "protein":
+      checkURL = `${interproURL}/api/protein/uniprot/${term}`;
+      targetURL = `${interproURL}/protein/uniprot/`;
+      break;
+    case "clan":
+      checkURL = `${interproURL}/api/set/pfam?search=${term}`;
+      targetURL = `${interproURL}/set/pfam/`;
+      break;
+  }
+  if (checkURL === null) return null;
+  const response = await fetch(checkURL);
+  if (response.ok) {
+    const payload = await response.json();
+    if ((payload?.results?.length || 0) > 0) {
+      return `${targetURL}${payload.results[0].metadata.accession}`;
+    }
+    if (payload?.metadata?.accession) {
+      return `${targetURL}${payload.metadata.accession}`;
+    }
+  }
+  return null;
+};
+
+const setNewURL = (theNewURL) => {
+  if (theNewURL === null) {
+    theNewURL = urlParts?.[1]
+      ? `${interproURL}/search/text/${urlParts[1]}`
+      : interproURL;
+  }
+  const iproLink = document.getElementById("linkToInterPro");
+  iproLink.setAttribute("href", theNewURL);
+  iproLink.innerHTML = theNewURL;
+};
 
 const url = new URL(document.location.href);
 let pathname = url.pathname;
@@ -41,26 +83,14 @@ switch (urlParts[0].toLowerCase()) {
     } else if (urlParts?.[1] === "browse") {
       newURL = `${interproURL}/entry/pfam/`;
     } else if (urlParts?.[1].length > 0) {
-      const response = await fetch(`${interproURL}/api/entry/pfam?search=${urlParts[1]}`);
-      if (response.ok) {
-        const payload = await response.json();
-        if (payload.results.length > 0) {
-          newURL = `${interproURL}/entry/pfam/${payload.results[0].metadata.accession}`;
-        }
-      }
+      newURL = checkAPI("entry", urlParts[1]);
     }
     break;
   case "protein":
     if (uniprotAccessionRegex.test(urlParts[1])) {
       newURL = `${interproURL}/protein/uniprot/${urlParts[1]}`;
     } else {
-      const response = await fetch(`${uniprotURL}/search?query=${urlParts[1]}`);
-      if (response.ok) {
-        const payload = await response.json();
-        if (payload.results.length === 1) {
-          newURL = `${interproURL}/protein/uniprot/${payload.results[0].primaryAccession}`;
-        }
-      }
+      newURL = checkAPI("protein", urlParts[1]);
     }
     break;
   case "clan":
@@ -69,13 +99,7 @@ switch (urlParts[0].toLowerCase()) {
     } else if (urlParts?.[1] === "browse") {
       newURL = `${interproURL}/set/pfam/`;
     } else if (urlParts?.[1].length > 0) {
-      const response = await fetch(`${interproURL}/api/set/pfam?search=${urlParts[1]}`);
-      if (response.ok) {
-        const payload = await response.json();
-        if (payload.results.length > 0) {
-          newURL = `${interproURL}/set/pfam/${payload.results[0].metadata.accession}`;
-        }
-      }
+      newURL = checkAPI("clan", urlParts[1]);
     }
     break;
   case "proteome":
@@ -116,12 +140,6 @@ switch (urlParts[0].toLowerCase()) {
     }
 }
 
-if (newURL === null) {
-  newURL = urlParts?.[1]
-    ? `${interproURL}/search/text/${urlParts[1]}`
-    : interproURL;
-}
-
 const svg = document.getElementById("countdown");
 svg.addEventListener("click", () => {
   playing = !playing;
@@ -131,9 +149,12 @@ svg.addEventListener("click", () => {
     svg.classList.add("paused");
   }
 });
-const iproLink = document.getElementById("linkToInterPro");
-iproLink.setAttribute("href", newURL);
-iproLink.innerHTML = newURL;
+
+if (typeof newURL?.then === "function") {
+  newURL.then((theNewURL) => setNewURL(theNewURL));
+} else {
+  setNewURL(newURL);
+}
 
 const legacyNewURL = `${legacyURL}/${pathname}${url.search ?? ""}`;
 const legacyLink = document.getElementById("linkToLegacy");
