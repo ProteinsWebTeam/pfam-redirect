@@ -25,6 +25,6 @@
   },
   "homepage": "https://github.com/ProteinsWebTeam/pfam-redirect#readme",
   "devDependencies": {
-    "parcel": "^2.6.2"
+    "parcel": "2.7.0"
   }
 }
