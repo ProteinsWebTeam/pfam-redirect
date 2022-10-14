@@ -1,4 +1,10 @@
-import { basepath, interproURL, legacyURL, test } from "../config.json";
+import {
+  basepath,
+  interproURL,
+  legacyURL,
+  ebiSearchURL,
+  test,
+} from "../config.json";
 
 const pfamAccessionRegex = /pf\d{5}$/i;
 const clanAccessionRegex = /cl\d{4}$/i;
@@ -27,7 +33,7 @@ const checkAPI = async (type, term) => {
   let targetURL = null;
   switch (type) {
     case "entry":
-      checkURL = `${interproURL}/api/entry/pfam?search=${term}`;
+      checkURL = `${ebiSearchURL}?query=(source_database:%22pfam%22)%20AND%20(short_name:%22${term}%22)&format=json`;
       targetURL = `${interproURL}/entry/pfam/`;
       break;
     case "protein":
@@ -48,6 +54,9 @@ const checkAPI = async (type, term) => {
     }
     if (payload?.metadata?.accession) {
       return `${targetURL}${payload.metadata.accession}`;
+    }
+    if (payload?.entries?.[0]?.id) {
+      return `${targetURL}${payload.entries[0].id}`;
     }
   }
   return null;
