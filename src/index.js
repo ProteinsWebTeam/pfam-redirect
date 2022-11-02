@@ -6,7 +6,7 @@ import {
   test,
 } from "../config.json";
 
-const pfamAccessionRegex = /pf\d{5}$/i;
+const pfamAccessionRegex = /pf\d{5}(\.\d+)?$/i;
 const clanAccessionRegex = /cl\d{4}$/i;
 const pdbAccessionRegex = /[a-zA-Z\d]{4}$/i;
 const uniprotAccessionRegex =
@@ -89,7 +89,7 @@ const urlParts = pathname.split("/");
 switch (urlParts[0].toLowerCase()) {
   case "family":
     if (pfamAccessionRegex.test(urlParts?.[1])) {
-      newURL = `${interproURL}/entry/pfam/${urlParts[1]}`;
+      newURL = `${interproURL}/entry/pfam/${urlParts[1]?.split(".")[0]}`;
     } else if (urlParts?.[1] === "browse") {
       newURL = `${interproURL}/entry/pfam/`;
     } else if (urlParts?.[1].length > 0) {
