@@ -64,7 +64,6 @@ const checkAPI = async (type, term) => {
 let newURL = null;
 
 const setNewURL = (theNewURL) => {
-  newURL = theNewURL;
   if (theNewURL === null) {
     theNewURL = urlParts?.[1]
       ? `${interproURL}/search/text/${urlParts[1]}`
@@ -73,6 +72,7 @@ const setNewURL = (theNewURL) => {
   const iproLink = document.getElementById("linkToInterPro");
   iproLink.setAttribute("href", theNewURL);
   iproLink.innerHTML = theNewURL;
+  newURL = theNewURL;
 };
 
 const url = new URL(document.location.href);
