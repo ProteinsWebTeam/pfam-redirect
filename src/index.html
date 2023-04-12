@@ -5,15 +5,320 @@
     <title>Pfam is now hosted by InterPro</title>
     <link rel="stylesheet" href="styles.css" />
     <script type="module" src="index.js"></script>
+    <script src="fake-home.js" defer></script>
   </head>
   <body>
     <main>
       <header>
-        <img src="pfam_logo.png" alt="Pfam" />
+        <img src="pfam_logo.png" alt="Pfam logo" />
+        <nav>
+          <ul>
+            <li>
+              <span>HOME</span>
+              &nbsp;|&nbsp;
+            </li>
+            <li>
+              <a href="https://www.ebi.ac.uk/interpro/search/text/">SEARCH</a>
+              &nbsp;|&nbsp;
+            </li>
+            <li>
+              <a href="https://www.ebi.ac.uk/interpro/entry/pfam/">BROWSE</a>
+              &nbsp;|&nbsp;
+            </li>
+            <li>
+              <a href="http://ftp.ebi.ac.uk/pub/databases/Pfam">FTP</a>
+              &nbsp;|&nbsp;
+            </li>
+            <li>
+              <a href="https://pfam-docs.readthedocs.io/en/latest/">HELP</a>
+              &nbsp;|&nbsp;
+            </li>
+            <li>
+              <a href="https://en.wikipedia.org/wiki/Pfam">ABOUT</a>
+            </li>
+          </ul>
+        </nav>
+        <img src="embl-ebi-logo.jpg" alt="EMBL EBI logo" />
       </header>
-      <hr />
-      <section>
-        <h3>The Pfam website will be decommissioned in January 2023.</h3>
+      <section class="announcement">
+        <span style="font-size: 4em; color: darkblue; padding: 1rem">!!</span>
+        <p>
+          <strong>Powering down the Pfam website</strong>
+          <br />
+          The Pfam website (<span
+            style="
+              color: #1779ba;
+              cursor: not-allowed;
+              opacity: 0.7;
+              text-decoration: none;
+            "
+            >pfam.xfam.org</span
+          >) is now decomissioned. And all Pfam data is now hosted at InterPro
+          (<a href="https://www.ebi.ac.uk/interpro" target="_blank" class="ext"
+            >www.ebi.ac.uk/interpro</a
+          >). The Pfam website will remain available at
+          <a href="//pfam-legacy.xfam.org">pfam-legacy.xfam.org</a> for a few
+          more months. You can read more about the sunset period in our
+          <a
+            href="//xfam.wordpress.com/2022/08/04/pfam-website-decommission/"
+            rel="noreferrer noopener"
+            target="_blank"
+            class="ext"
+            >blog post</a
+          >.<br /><br />
+          All links below redirect to the closest alternative page in the
+          InterPro website.
+        </p>
+      </section>
+      <section class="fake-home">
+        <div id="intro">
+          <h2>
+            Pfam
+            <!--35.0 (November 2021, 19632 entries)-->
+          </h2>
+
+          <div>
+            The Pfam database is a large collection of protein families, each
+            represented by <em>multiple sequence alignments</em> and
+            <em>hidden Markov models (HMMs)</em>.
+            <details>
+              <summary></summary>
+              <p>
+                Proteins are generally composed of one or more functional
+                regions, commonly termed <em>domains</em>. Different
+                combinations of domains give rise to the diverse range of
+                proteins found in nature. The identification of domains that
+                occur within proteins can therefore provide insights into their
+                function.
+              </p>
+              <p>
+                Pfam also generates higher-level groupings of related entries,
+                known as
+                <em>clans</em>. A clan is a collection of Pfam entries which are
+                related by similarity of sequence, structure or profile-HMM.
+              </p>
+              <p>
+                The data presented for each entry is based on the
+                <a
+                  class="ext"
+                  href="http://www.uniprot.org/help/reference_proteome"
+                  >UniProt Reference Proteomes</a
+                >
+                but information on individual UniProtKB sequences can still be
+                found by entering the protein accession. Pfam
+                <i>full</i> alignments are available from searching a variety of
+                databases, either to provide different accessions (e.g. all
+                UniProt and NCBI GI) or different levels of redundancy.
+              </p>
+            </details>
+          </div>
+        </div>
+        <hr />
+        <section class="body">
+          <nav>
+            <ul>
+              <li>
+                <a onclick="switchPanel(this,'help')" class="current">
+                  QUICK LINKS
+                </a>
+              </li>
+              <li>
+                <a onclick="switchPanel(this,'protein')"> SEQUENCE SEARCH </a>
+              </li>
+              <li>
+                <a onclick="switchPanel(this,'family')"> VIEW A PFAM ENTRY </a>
+              </li>
+              <li>
+                <a onclick="switchPanel(this,'clan')"> VIEW A CLAN </a>
+              </li>
+              <li>
+                <a onclick="switchPanel(this,'sequence')"> VIEW A SEQUENCE </a>
+              </li>
+              <li>
+                <a onclick="switchPanel(this,'structure')">
+                  VIEW A STRUCTURE
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <section class="content">
+            <section id="help" class="current">
+              <h3>You can find data in Pfam in various ways...</h3>
+              <ul>
+                <li>Analyze your protein sequence for Pfam matches</li>
+                <li>View Pfam annotation and alignments</li>
+                <li>See groups of related entries</li>
+                <li>Look at the domain organisation of a protein sequence</li>
+                <li>Find the domains on a PDB structure</li>
+                <li>Query Pfam by keywords</li>
+                <li>
+                  <div>
+                    <div>
+                      <input size="30" id="jumpInput" />
+                      <button id="jumpButton" onclick="searchInterPro()">
+                        GO
+                      </button>
+                      <button onclick="setExample('jump')">Example</button>
+                    </div>
+                    <p class="explanation">
+                      Enter any type of accession or ID to jump to the page for
+                      a Pfam entry or clan, UniProt sequence, PDB structure,
+                      etc.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  Or view the
+                  <a href="https://pfam-docs.readthedocs.io/en/latest/">help</a>
+                  pages for more information
+                </li>
+              </ul>
+            </section>
+            <section id="protein">
+              <h3>Analyze your protein sequence for Pfam matches</h3>
+              <p>
+                Paste your protein sequence here to find matching Pfam entries.
+              </p>
+              <textarea id="seqInput" cols="50" rows="6"></textarea>
+              <div>
+                <button id="seqButton" onclick="sequenceSearchInterPro()">
+                  GO
+                </button>
+                <button onclick="setExample('seq')">Example</button>
+              </div>
+              <p class="explanation">
+                You will be redirected to InterPro sequence search. You can
+                customize your query there.
+              </p>
+            </section>
+            <section id="family">
+              <h3>View Pfam annotation and alignments</h3>
+              <p>
+                Enter an accession (e.g.&nbsp;<em>PF02171</em>) to see all data
+                for that entry.
+              </p>
+              <div>
+                <input type="text" name="entry" id="familyInput" size="30" />
+                <button id="familyButton" onclick="entryInterPro()">GO</button>
+                <button onclick="setExample('family')">Example</button>
+              </div>
+              <p class="explanation">
+                You can also
+                <a href="https://www.ebi.ac.uk/interpro/entry/pfam/">browse</a>
+                through the list of all Pfam families.
+              </p>
+            </section>
+            <section id="clan">
+              <h3>See groups of related families</h3>
+              <p>
+                Enter a clan accession (e.g.&nbsp;<em>CL0005</em>) to see
+                information about that clan.
+              </p>
+              <div>
+                <input type="text" id="clanInput" size="30" />
+                <button id="searchClan" onclick="setInterPro()">GO</button>
+                <button onclick="setExample('clan')">Example</button>
+              </div>
+              <p class="explanation">
+                You can also
+                <a href="https://www.ebi.ac.uk/interpro/set/all/entry/pfam/"
+                  >browse</a
+                >
+                through a list of clans.
+              </p>
+            </section>
+            <section id="sequence">
+              <h3>View domain organisation of a protein sequence</h3>
+              <p>
+                Enter a sequence identifier (e.g.&nbsp;<em>VAV_HUMAN</em>) or
+                accession (e.g.&nbsp;<em>P15498</em>).
+              </p>
+              <div>
+                <input type="text" id="proteinInput" size="30" />
+                <button id="searchIDA" onclick="proteinInterPro()">GO</button>
+                <button onclick="setExample('protein')">Example</button>
+              </div>
+              <p class="explanation">
+                You can use
+                <a class="ext" href="http://www.uniprot.org/">UniProt</a>
+                accessions. You can also
+                <a
+                  href="https://www.ebi.ac.uk/interpro/protein/UniProt/entry/pfam/"
+                  >browse proteins</a
+                >
+                with pfam matches.
+              </p>
+            </section>
+            <section id="structure">
+              <h3>Find the domains on a PDB structure</h3>
+              <p>
+                Enter the PDB identifier (e.g.&nbsp;<em>2abl</em>) for the
+                structure in the Protein DataBank.
+              </p>
+              <div>
+                <input type="text" id="structureInput" size="30" />
+                <button onclick="structureInterPro()">GO</button>
+                <button onclick="setExample('structure')">Example</button>
+              </div>
+            </section>
+            <section id="keyword">
+              <h3>Query Pfam by keyword</h3>
+              <p>Search for keywords in text data in the Pfam database.</p>
+              <div>
+                <input
+                  class="entryField"
+                  type="text"
+                  name="query"
+                  id="keywordField"
+                  size="30"
+                />
+                <button id="searchKeyword">GO</button>
+                <button id="exampleKeyword">Example</button>
+              </div>
+              <p class="explanation">
+                You can also use the
+                <a
+                  onclick="$('siteSearchField').focus();return false;"
+                  href="#"
+                >
+                  keyword search box</a
+                >
+                at the top of every page.
+              </p>
+            </section>
+          </section>
+        </section>
+        <hr />
+        <section class="citation">
+          <h2>Citing Pfam</h2>
+          <p>
+            If you find Pfam useful, please consider
+            <a
+              href="https://pfam-docs.readthedocs.io/en/latest/citing-pfam.html"
+              >citing</a
+            >
+            the reference that describes this work:
+          </p>
+          <div class="citation">
+            <span class="title">
+              <a class="ext" href="https://doi.org/10.1093/nar/gkaa913">
+                Pfam: The protein families database in 2021</a
+              >:
+            </span>
+            <span class="authors">
+              J.&nbsp;Mistry, S.&nbsp;Chuguransky, L.&nbsp;Williams,
+              M.&nbsp;Qureshi, G.A.&nbsp;Salazar, E.L.L.&nbsp;Sonnhammer,
+              S.C.E.&nbsp;Tosatto, L. Paladin,&nbsp;S. Raj,
+              L.J.&nbsp;Richardson, R.D.&nbsp;Finn, A.&nbsp;Bateman
+            </span>
+            <span class="ref">
+              <span class="jrnl">Nucleic Acids Research</span>&nbsp;(2020) doi:
+              10.1093/nar/gkaa913
+            </span>
+          </div>
+        </section>
+      </section>
+      <section class="redirect">
         <div>
           <p>
             You will be redirected in <span class="sec-left">9</span> seconds to
@@ -36,7 +341,7 @@
                   stroke-width="5"
                 ></circle>
               </g>
-              <text x="20" y="30" class="sec-left">9</text>
+              <text x="20" y="30" class="sec-left">5</text>
               <g class="button pause">
                 <rect x="16" y="15" width="8" height="20" />
                 <rect x="26" y="15" width="8" height="20" />
@@ -55,19 +360,21 @@
               https://www.ebi.ac.uk/interpro/</a
             >
           </code>
-          <hr />
-          <h4>Legacy website</h4>
-          <p>
-            Alternatively, you can go to the Pfam legacy website. Please note
-            that the legacy website will not be mantained, and will only be
-            available until January 2023.
-          </p>
-          <code>
-            <a href="https://pfam-legacy.xfam.org/" id="linkToLegacy">
-              https://pfam-legacy.xfam.org/</a
-            >
-          </code>
         </div>
+      </section>
+      <section>
+        <hr />
+        <h4>Legacy website</h4>
+        <p>
+          Alternatively, you can go to the Pfam legacy website. Please note that
+          the legacy website will not be mantained, and will only be available
+          until summer 2023.
+        </p>
+        <code>
+          <a href="https://pfam-legacy.xfam.org/" id="linkToLegacy">
+            https://pfam-legacy.xfam.org/</a
+          >
+        </code>
       </section>
     </main>
   </body>

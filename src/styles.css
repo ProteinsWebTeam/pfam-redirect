@@ -1,21 +1,145 @@
 body {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 19px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.421;
 }
 main {
   margin: 0 4em;
 }
-header {
+hr {
+  background-color: #e7e7e7;
+  border: none;
+  height: 1px;
+  width: 60%;
+  margin: 2em auto;
+}
+main > header {
+  display: flex;
   color: darkblue;
+  width: 100%;
   margin-bottom: 2em;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+main > header img {
+  height: 70px;
 }
 
+main > header nav ul {
+  list-style: none;
+  display: flex;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 0;
+}
+main > header nav li {
+  white-space: nowrap;
+}
+main > header nav ul a {
+  text-decoration: none;
+  color: #074987;
+}
+main > header nav ul span {
+  color: grey;
+}
+.announcement {
+  display: flex;
+  align-items: center;
+  background: navajowhite;
+  padding: 0 1rem;
+}
+
+.redirect {
+  font-size: 19px;
+  display: none;
+}
+.fake-home {
+  display: none;
+  margin: 0 10em;
+}
+.redirect.show,
+.fake-home.show {
+  display: block;
+}
+
+.fake-home .body {
+  margin: 0 10em;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1em;
+}
+.fake-home details {
+  display: inline;
+}
+.fake-home details summary {
+  color: #074987;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 2em;
+  text-decoration: underline;
+  list-style: none;
+}
+.fake-home details summary::after {
+  content: "More...";
+}
+.fake-home details[open] summary::after {
+  content: "Less...";
+}
+.fake-home .body nav ul {
+  list-style: none;
+  text-align: right;
+  padding: 0;
+}
+.fake-home .body nav ul a {
+  color: #074987;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 2em;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.fake-home .body nav ul a.current {
+  color: grey;
+  text-decoration: none;
+}
+.fake-home .body .content {
+  flex-grow: 2;
+}
+.fake-home h3 {
+  text-transform: uppercase;
+  font-size: 1em;
+  margin: 0;
+  padding: 0.4em 0;
+  color: #666;
+}
+
+.content ul {
+  list-style: none;
+  line-height: 2em;
+  padding: 0;
+}
+section.content > section {
+  display: none;
+}
+section.content > section.current {
+  display: block;
+}
+p.explanation {
+  font-size: 0.8em;
+  font-style: italic;
+  line-height: 1em;
+  margin-top: 0;
+}
 .center {
   text-align: center;
 }
+
+/* -- Countdown animation -- */
 .spinner {
   animation: rotate 2s linear infinite;
   transform-origin: 25px 25px;
@@ -27,7 +151,7 @@ header {
 .spinner .path {
   stroke: #004986;
   stroke-linecap: round;
-  animation: dash 12s ease-in-out 1;
+  animation: dash 6s ease-in-out 1;
 }
 
 svg#countdown.paused .spinner .path,
