@@ -139,6 +139,12 @@
                   VIEW A STRUCTURE
                 </a>
               </li>
+              <li>
+                <a onclick="switchPanel(this,'keyword')"> KEYWORD SEARCH </a>
+              </li>
+              <li>
+                <a onclick="switchPanel(this,'help')"> JUMP TO </a>
+              </li>
             </ul>
           </nav>
           <section class="content">
@@ -155,7 +161,7 @@
                   <div>
                     <div>
                       <input size="30" id="jumpInput" />
-                      <button id="jumpButton" onclick="searchInterPro()">
+                      <button id="jumpButton" onclick="searchInterPro('jump')">
                         GO
                       </button>
                       <button onclick="setExample('jump')">Example</button>
@@ -265,15 +271,9 @@
               <h3>Query Pfam by keyword</h3>
               <p>Search for keywords in text data in the Pfam database.</p>
               <div>
-                <input
-                  class="entryField"
-                  type="text"
-                  name="query"
-                  id="keywordField"
-                  size="30"
-                />
-                <button id="searchKeyword">GO</button>
-                <button id="exampleKeyword">Example</button>
+                <input type="text" id="keywordInput" size="30" />
+                <button onclick="searchInterPro('keyword')">GO</button>
+                <button onclick="setExample('keyword')">Example</button>
               </div>
               <p class="explanation">
                 You can also use the
@@ -362,9 +362,9 @@
           </code>
         </div>
       </section>
-      <section>
+      <section class="legacy">
         <hr />
-        <h4>Legacy website</h4>
+        <h2>Legacy website</h2>
         <p>
           Alternatively, you can go to the Pfam legacy website. Please note that
           the legacy website will not be mantained, and will only be available

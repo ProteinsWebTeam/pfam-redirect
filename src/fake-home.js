@@ -40,6 +40,7 @@ FRISQEHLADHFDGRDRRTPRRTRVNGDNRL`,
   clan: ["CL0001", "CL0005"],
   protein: ["P99999", "P15498"],
   structure: ["1cuk", "2abl"],
+  keyword: ["kinase", "apoptosis"],
 };
 const current = {
   jump: 0,
@@ -48,6 +49,7 @@ const current = {
   clan: 0,
   protein: 0,
   structure: 0,
+  keyword: 0,
 };
 function setExample(type) {
   current[type]++;
@@ -58,8 +60,8 @@ function setExample(type) {
   }
 }
 
-function searchInterPro() {
-  const term = document.getElementById(`jumpInput`)?.value || "";
+function searchInterPro(type) {
+  const term = document.getElementById(`${type}Input`)?.value || "";
   window.location.href = `https://www.ebi.ac.uk/interpro/search/text/${term}`;
 }
 function sequenceSearchInterPro() {
