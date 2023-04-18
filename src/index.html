@@ -5,7 +5,43 @@
     <title>Pfam is now hosted by InterPro</title>
     <link rel="stylesheet" href="styles.css" />
     <script type="module" src="index.js"></script>
-    <script src="fake-home.js" defer></script>
+    <script type="module" defer>
+      import { setExample, switchPanel, go } from "./fake-home.js";
+      window.addEventListener("load", () => {
+        const menuButtons = document.querySelectorAll(".main-menu a");
+        for (const button of menuButtons) {
+          button.addEventListener("click", () => {
+            const type = button.getAttribute("data-type");
+            switchPanel(button, type);
+          });
+        }
+        const exampleButtons =
+          document.getElementsByClassName("example-button");
+        for (const button of exampleButtons) {
+          button.addEventListener("click", () => {
+            const type = button.getAttribute("data-type");
+            setExample(type);
+          });
+        }
+        const goButtons = document.getElementsByClassName("go-button");
+        for (const button of goButtons) {
+          button.addEventListener("click", () => {
+            const type = button.getAttribute("data-type");
+            go(type);
+          });
+        }
+
+        fetch("https://www.ebi.ac.uk/interpro/api/utils/release/current")
+          .then((r) => r.json())
+          .then((data) => {
+            const { version, signatures, sets } =
+              data?.content?.member_databases?.pfam;
+            document.getElementById(
+              "pfam-version"
+            ).innerHTML = `${version} (${signatures} entries, ${sets} clans)`;
+          });
+      });
+    </script>
   </head>
   <body>
     <main>
@@ -72,10 +108,7 @@
       </section>
       <section class="fake-home">
         <div id="intro">
-          <h2>
-            Pfam
-            <!--35.0 (November 2021, 19632 entries)-->
-          </h2>
+          <h2>Pfam <span id="pfam-version"></span></h2>
 
           <div>
             The Pfam database is a large collection of protein families, each
@@ -116,34 +149,30 @@
         <hr />
         <section class="body">
           <nav>
-            <ul>
+            <ul class="main-menu">
               <li>
-                <a onclick="switchPanel(this,'help')" class="current">
-                  QUICK LINKS
-                </a>
+                <a data-type="help" class="current"> QUICK LINKS </a>
               </li>
               <li>
-                <a onclick="switchPanel(this,'protein')"> SEQUENCE SEARCH </a>
+                <a data-type="protein"> SEQUENCE SEARCH </a>
               </li>
               <li>
-                <a onclick="switchPanel(this,'family')"> VIEW A PFAM ENTRY </a>
+                <a data-type="family"> VIEW A PFAM ENTRY </a>
               </li>
               <li>
-                <a onclick="switchPanel(this,'clan')"> VIEW A CLAN </a>
+                <a data-type="clan"> VIEW A CLAN </a>
               </li>
               <li>
-                <a onclick="switchPanel(this,'sequence')"> VIEW A SEQUENCE </a>
+                <a data-type="sequence"> VIEW A SEQUENCE </a>
               </li>
               <li>
-                <a onclick="switchPanel(this,'structure')">
-                  VIEW A STRUCTURE
-                </a>
+                <a data-type="structure"> VIEW A STRUCTURE </a>
               </li>
               <li>
-                <a onclick="switchPanel(this,'keyword')"> KEYWORD SEARCH </a>
+                <a data-type="keyword"> KEYWORD SEARCH </a>
               </li>
               <li>
-                <a onclick="switchPanel(this,'help')"> JUMP TO </a>
+                <a data-type="help"> JUMP TO </a>
               </li>
             </ul>
           </nav>
@@ -161,10 +190,10 @@
                   <div>
                     <div>
                       <input size="30" id="jumpInput" />
-                      <button id="jumpButton" onclick="searchInterPro('jump')">
-                        GO
+                      <button data-type="jump" class="go-button">GO</button>
+                      <button data-type="jump" class="example-button">
+                        Example
                       </button>
-                      <button onclick="setExample('jump')">Example</button>
                     </div>
                     <p class="explanation">
                       Enter any type of accession or ID to jump to the page for
@@ -187,10 +216,8 @@
               </p>
               <textarea id="seqInput" cols="50" rows="6"></textarea>
               <div>
-                <button id="seqButton" onclick="sequenceSearchInterPro()">
-                  GO
-                </button>
-                <button onclick="setExample('seq')">Example</button>
+                <button data-type="seq" class="go-button">GO</button>
+                <button data-type="seq" class="example-button">Example</button>
               </div>
               <p class="explanation">
                 You will be redirected to InterPro sequence search. You can
@@ -205,8 +232,10 @@
               </p>
               <div>
                 <input type="text" name="entry" id="familyInput" size="30" />
-                <button id="familyButton" onclick="entryInterPro()">GO</button>
-                <button onclick="setExample('family')">Example</button>
+                <button data-type="family" class="go-button">GO</button>
+                <button data-type="family" class="example-button">
+                  Example
+                </button>
               </div>
               <p class="explanation">
                 You can also
@@ -222,8 +251,8 @@
               </p>
               <div>
                 <input type="text" id="clanInput" size="30" />
-                <button id="searchClan" onclick="setInterPro()">GO</button>
-                <button onclick="setExample('clan')">Example</button>
+                <button data-type="clan" class="go-button">GO</button>
+                <button data-type="clan" class="example-button">Example</button>
               </div>
               <p class="explanation">
                 You can also
@@ -241,8 +270,10 @@
               </p>
               <div>
                 <input type="text" id="proteinInput" size="30" />
-                <button id="searchIDA" onclick="proteinInterPro()">GO</button>
-                <button onclick="setExample('protein')">Example</button>
+                <button data-type="protein" class="go-button">GO</button>
+                <button data-type="protein" class="example-button">
+                  Example
+                </button>
               </div>
               <p class="explanation">
                 You can
@@ -261,8 +292,10 @@
               </p>
               <div>
                 <input type="text" id="structureInput" size="30" />
-                <button onclick="structureInterPro()">GO</button>
-                <button onclick="setExample('structure')">Example</button>
+                <button data-type="structure" class="go-button">GO</button>
+                <button data-type="structure" class="example-button">
+                  Example
+                </button>
               </div>
             </section>
             <section id="keyword">
@@ -270,19 +303,11 @@
               <p>Search for keywords in text data in the Pfam database.</p>
               <div>
                 <input type="text" id="keywordInput" size="30" />
-                <button onclick="searchInterPro('keyword')">GO</button>
-                <button onclick="setExample('keyword')">Example</button>
+                <button data-type="keyword" class="go-button">GO</button>
+                <button data-type="keyword" class="example-button">
+                  Example
+                </button>
               </div>
-              <p class="explanation">
-                You can also use the
-                <a
-                  onclick="$('siteSearchField').focus();return false;"
-                  href="#"
-                >
-                  keyword search box</a
-                >
-                at the top of every page.
-              </p>
             </section>
           </section>
         </section>

@@ -1,9 +1,9 @@
-import { basepath, interproURL } from "../config.json";
+import { interproURL } from "../config.json";
 
-const pfamAccessionRegex = /pf\d{5}(\.\d+)?$/i;
-const clanAccessionRegex = /cl\d{4}$/i;
-const pdbAccessionRegex = /[a-zA-Z\d]{4}$/i;
-const uniprotAccessionRegex =
+export const pfamAccessionRegex = /pf\d{5}(\.\d+)?$/i;
+export const clanAccessionRegex = /cl\d{4}$/i;
+export const pdbAccessionRegex = /[a-zA-Z\d]{4}$/i;
+export const uniprotAccessionRegex =
   /[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2}$/i;
 
 const checkAPI = async (type, term) => {

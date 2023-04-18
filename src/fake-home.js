@@ -1,4 +1,11 @@
-function switchPanel(element, target) {
+import {
+  pfamAccessionRegex,
+  clanAccessionRegex,
+  pdbAccessionRegex,
+  uniprotAccessionRegex,
+} from "./get-new-url";
+
+export function switchPanel(element, target) {
   document
     .querySelectorAll(".fake-home .body nav ul a")
     ?.forEach((e) => e.classList.remove("current"));
@@ -51,7 +58,7 @@ const current = {
   structure: 0,
   keyword: 0,
 };
-function setExample(type) {
+export function setExample(type) {
   current[type]++;
   if (current[type] >= examples[type].length) current[type] = 0;
   const input = document.getElementById(`${type}Input`);
@@ -60,29 +67,39 @@ function setExample(type) {
   }
 }
 
-function searchInterPro(type) {
-  const term = document.getElementById(`${type}Input`)?.value || "";
-  window.location.href = `https://www.ebi.ac.uk/interpro/search/text/${term}`;
-}
-function sequenceSearchInterPro() {
-  const seq = document.getElementById(`seqInput`)?.value || "";
-  window.location.href = `https://www.ebi.ac.uk/interpro/search/sequence/${encodeURI(
-    seq
-  )}`;
-}
-function entryInterPro() {
-  const term = document.getElementById(`familyInput`)?.value || "";
-  window.location.href = `https://www.ebi.ac.uk/interpro/entry/pfam/${term}`;
-}
-function setInterPro() {
-  const term = document.getElementById(`setInput`)?.value || "";
-  window.location.href = `https://www.ebi.ac.uk/interpro/set/pfam/${term}`;
-}
-function proteinInterPro() {
-  const term = document.getElementById(`proteinInput`)?.value || "";
-  window.location.href = `https://www.ebi.ac.uk/interpro/protein/uniprot/${term}`;
-}
-function structureInterPro() {
-  const term = document.getElementById(`structureInput`)?.value || "";
-  window.location.href = `https://www.ebi.ac.uk/interpro/structure/pdb/${term}`;
+export function go(type) {
+  const value = document.getElementById(`${type}Input`)?.value || "";
+  let url = "";
+  switch (type) {
+    case "family":
+      if (pfamAccessionRegex.test(value)) {
+        url = `https://www.ebi.ac.uk/interpro/entry/pfam/${value}`;
+      }
+      break;
+    case "clan":
+      if (clanAccessionRegex.test(value)) {
+        url = `https://www.ebi.ac.uk/interpro/set/pfam/${value}`;
+      }
+      break;
+    case "protein":
+      if (uniprotAccessionRegex.test(value)) {
+        url = `https://www.ebi.ac.uk/interpro/protein/uniprot/${value}`;
+      }
+      break;
+    case "structure":
+      if (pdbAccessionRegex.test(value)) {
+        url = `https://www.ebi.ac.uk/interpro/structure/pdb/${value}`;
+      }
+      break;
+    case "seq":
+      url = `https://www.ebi.ac.uk/interpro/search/sequence/${encodeURI(
+        value
+      )}`;
+      break;
+  }
+  // for 'jump', 'keyword', and any other that didn't match their regex
+  if (!url) {
+    url = `https://www.ebi.ac.uk/interpro/search/text/${value}`;
+  }
+  window.location.href = url;
 }
