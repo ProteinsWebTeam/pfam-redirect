@@ -49,10 +49,19 @@ main > header nav ul span {
   color: grey;
 }
 .announcement {
-  display: flex;
-  align-items: center;
-  background: navajowhite;
-  padding: 0 1rem;
+  background: #d7ecfa;
+  padding: 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.announcement h3 {
+  font-weight: normal;
+  font-size: 1.5em;
+  margin: 0 0 0.5rem 0;
+}
+
+.announcement p {
+  margin: 0;
 }
 
 .redirect {
@@ -205,9 +214,4 @@ svg#countdown {
 }
 svg#countdown:hover g.button {
   opacity: 0.8;
-}
-
-.legacy {
-  margin: 0 10em;
-  display: block;
 }
