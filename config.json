@@ -1,7 +1,6 @@
 {
   "basepath": "/",
   "interproURL": "https://www.ebi.ac.uk/interpro",
-  "legacyURL": "http://pfamdev-legacy.xfam.org",
   "ebiSearchURL": "https://www.ebi.ac.uk/ebisearch/ws/rest/interpro7",
   "test": true
 }

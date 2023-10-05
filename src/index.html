@@ -38,7 +38,7 @@
               data?.content?.member_databases?.pfam;
             document.getElementById(
               "pfam-version"
-            ).innerHTML = `${version} (${signatures} entries, ${sets} clans)`;
+            ).innerHTML = `${version} (${signatures.toLocaleString()} entries, ${sets.toLocaleString()} clans)`;
           });
       });
     </script>
@@ -62,7 +62,7 @@
               &nbsp;|&nbsp;
             </li>
             <li>
-              <a href="http://ftp.ebi.ac.uk/pub/databases/Pfam">FTP</a>
+              <a href="https://ftp.ebi.ac.uk/pub/databases/Pfam">FTP</a>
               &nbsp;|&nbsp;
             </li>
             <li>
@@ -70,43 +70,19 @@
               &nbsp;|&nbsp;
             </li>
             <li>
-              <a
-                href="https://interpro-documentation.readthedocs.io/en/latest/pfam.html"
-                >ABOUT</a
-              >
+              <a href="https://interpro-documentation.readthedocs.io/en/latest/pfam.html">ABOUT</a>
             </li>
           </ul>
         </nav>
         <img src="embl-ebi-logo.jpg" alt="EMBL EBI logo" />
       </header>
       <section class="announcement">
-        <span style="font-size: 4em; color: darkblue; padding: 1rem">!!</span>
+        <h3>
+          Pfam data and new releases are available through <a href="https://www.ebi.ac.uk/interpro">InterPro</a>
+        </h3>
         <p>
-          <strong>Powering down the Pfam website</strong>
-          <br />
-          The Pfam website (<span
-            style="
-              color: #1779ba;
-              cursor: not-allowed;
-              opacity: 0.7;
-              text-decoration: none;
-            "
-            >pfam.xfam.org</span
-          >) is now decomissioned. And all Pfam data is now hosted at InterPro
-          (<a href="https://www.ebi.ac.uk/interpro" target="_blank" class="ext"
-            >www.ebi.ac.uk/interpro</a
-          >). The Pfam website will remain available at
-          <a href="//pfam-legacy.xfam.org">pfam-legacy.xfam.org</a> for a few
-          more months. You can read more about the sunset period in our
-          <a
-            href="//xfam.wordpress.com/2022/08/04/pfam-website-decommission/"
-            rel="noreferrer noopener"
-            target="_blank"
-            class="ext"
-            >blog post</a
-          >.<br /><br />
-          All links below redirect to the closest alternative page in the
-          InterPro website.
+          The Pfam website now serves as a static page with no data updates.
+          All links below redirect to the closest alternative page in the InterPro website.
         </p>
       </section>
       <section class="fake-home">
@@ -137,7 +113,7 @@
                 The data presented for each entry is based on the
                 <a
                   class="ext"
-                  href="http://www.uniprot.org/help/reference_proteome"
+                  href="https://www.uniprot.org/help/reference_proteome"
                   >UniProt Reference Proteomes</a
                 >
                 but information on individual UniProtKB sequences can still be
@@ -181,7 +157,7 @@
           </nav>
           <section class="content">
             <section id="help" class="current">
-              <h3>You can find data in Pfam in various ways...</h3>
+              <h3>You can find data in Pfam in various ways&hellip;</h3>
               <ul>
                 <li>Analyze your protein sequence for Pfam matches</li>
                 <li>View Pfam annotation and alignments</li>
@@ -334,11 +310,11 @@
             <span class="authors">
               J.&nbsp;Mistry, S.&nbsp;Chuguransky, L.&nbsp;Williams,
               M.&nbsp;Qureshi, G.A.&nbsp;Salazar, E.L.L.&nbsp;Sonnhammer,
-              S.C.E.&nbsp;Tosatto, L. Paladin,&nbsp;S. Raj,
-              L.J.&nbsp;Richardson, R.D.&nbsp;Finn, A.&nbsp;Bateman
+              S.C.E.&nbsp;Tosatto, L.&nbsp;Paladin, S.&nbsp;Raj,
+              L.J.&nbsp;Richardson, R.D.&nbsp;Finn, A.&nbsp;Bateman,
             </span>
             <span class="ref">
-              <span class="jrnl">Nucleic Acids Research</span>&nbsp;(2020) doi:
+              <span class="jrnl">Nucleic Acids Research</span>&nbsp;(2021) doi:
               10.1093/nar/gkaa913
             </span>
           </div>
@@ -348,7 +324,7 @@
         <div>
           <p>
             You will be redirected in <span class="sec-left">9</span> seconds to
-            the corresponding data page on the InterPro website.
+            the corresponding page on the InterPro website.
           </p>
           <div class="center">
             <svg
@@ -387,20 +363,6 @@
             >
           </code>
         </div>
-      </section>
-      <section class="legacy">
-        <hr />
-        <h2>Legacy website</h2>
-        <p>
-          Alternatively, you can go to the Pfam legacy website. Please note that
-          the legacy website will not be mantained, and will only be available
-          until summer 2023.
-        </p>
-        <code>
-          <a href="https://pfam-legacy.xfam.org/" id="linkToLegacy">
-            https://pfam-legacy.xfam.org/</a
-          >
-        </code>
       </section>
     </main>
   </body>

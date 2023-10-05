@@ -1,4 +1,4 @@
-import { interproURL, legacyURL, test, basepath } from "../config.json";
+import { interproURL, test, basepath } from "../config.json";
 import getNewURL from "./get-new-url";
 
 const url = new URL(document.location.href);
@@ -60,11 +60,6 @@ if (newURL) {
   } else {
     setNewURL(newURL);
   }
-
-  const legacyNewURL = `${legacyURL}/${pathname}${url.search ?? ""}`;
-  const legacyLink = document.getElementById("linkToLegacy");
-  legacyLink.setAttribute("href", legacyNewURL);
-  legacyLink.innerHTML = legacyNewURL;
 } else {
   document.querySelector(".fake-home").classList.add("show");
 }
