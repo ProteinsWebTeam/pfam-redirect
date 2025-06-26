@@ -18,7 +18,7 @@ jobs:
           cat config.json
           yarn build -- --public-url ./
       - name: 🚀 Deploy Site
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist # The folder the action should deploy.
