@@ -2,7 +2,7 @@ import { interproURL, test, basepath } from "../config.json";
 import getNewURL from "./get-new-url";
 
 (async () => {
-  document.querySelector(".redirect").classList.add("show");
+
   const url = new URL(document.location.href);
   let pathname = url.pathname;
 
@@ -16,17 +16,22 @@ import getNewURL from "./get-new-url";
 
   const urlParts = pathname.split("/");
 
-  let resolvedURL = await getNewURL(urlParts);
+  if (urlParts.length > 1) {
+    document.querySelector(".redirect").classList.add("show");
+    let resolvedURL = await getNewURL(urlParts);
+    if (!resolvedURL) {
+      resolvedURL = urlParts?.[1]
+        ? `${interproURL}/search/text/${urlParts[1]}`
+        : interproURL;
+    }
 
-  if (!resolvedURL) {
-    resolvedURL = urlParts?.[1]
-      ? `${interproURL}/search/text/${urlParts[1]}`
-      : interproURL;
+    if (test) {
+      console.log(resolvedURL);
+    } else {
+      window.location.replace(resolvedURL);
+    }
   }
-
-  if (test) {
-    console.log(resolvedURL);
-  } else {
-    window.location.replace(resolvedURL);
+  else {
+    document.querySelector(".fake-home").classList.add("show");
   }
 })();
