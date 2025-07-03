@@ -15,14 +15,15 @@ const checkAPI = async (type, term) => {
       targetURL = `${interproURL}/entry/pfam/`;
       break;
     case "protein":
-      checkURL = `${interproURL}/api/protein/uniprot/${term}`;
-      targetURL = `${interproURL}/protein/uniprot/`;
+      checkURL = `${interproURL}/wwwapi/protein/uniprot/${term}`;
+      targetURL = `${interproURL}/wwwapi/protein/uniprot/`;
       break;
     case "clan":
-      checkURL = `${interproURL}/api/set/pfam?search=${term}`;
+      checkURL = `${interproURL}/wwwapi/set/pfam?search=${term}`;
       targetURL = `${interproURL}/set/pfam/`;
       break;
   }
+
   if (checkURL === null) return null;
   const response = await fetch(checkURL);
   if (response.ok) {
@@ -40,7 +41,7 @@ const checkAPI = async (type, term) => {
   return null;
 };
 
-const getNewURL = (urlParts) => {
+const getNewURL = async (urlParts) => {
   let newURL = null;
 
   switch (urlParts[0].toLowerCase()) {
@@ -50,14 +51,14 @@ const getNewURL = (urlParts) => {
       } else if (urlParts?.[1] === "browse") {
         newURL = `${interproURL}/entry/pfam/`;
       } else if (urlParts?.[1].length > 0) {
-        newURL = checkAPI("entry", urlParts[1]);
+        newURL = await checkAPI("entry", urlParts[1]);
       }
       break;
     case "protein":
       if (uniprotAccessionRegex.test(urlParts[1])) {
         newURL = `${interproURL}/protein/uniprot/${urlParts[1]}`;
       } else {
-        newURL = checkAPI("protein", urlParts[1]);
+        newURL = await checkAPI("protein", urlParts[1]);
       }
       break;
     case "clan":
@@ -66,7 +67,7 @@ const getNewURL = (urlParts) => {
       } else if (urlParts?.[1] === "browse") {
         newURL = `${interproURL}/set/pfam/`;
       } else if (urlParts?.[1].length > 0) {
-        newURL = checkAPI("clan", urlParts[1]);
+        newURL = await checkAPI("clan", urlParts[1]);
       }
       break;
     case "proteome":
